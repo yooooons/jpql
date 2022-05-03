@@ -15,6 +15,17 @@ public class Member {
     private Team team;
 
 
+    private MemberType type;
+
+    @Enumerated(EnumType.STRING)
+    public MemberType getType() {
+        return type;
+    }
+
+    public void setType(MemberType type) {
+        this.type = type;
+    }
+
     public void changeTeam(Team team) {
         this.team = team;
         team.getMembers().add(this);
@@ -51,6 +62,7 @@ public class Member {
     public void setTeam(Team team) {
         this.team = team;
     }
+
 
     @Override
     public String toString() {

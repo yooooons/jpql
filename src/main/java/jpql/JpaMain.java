@@ -1,6 +1,7 @@
 package jpql;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.List;
 
 public class JpaMain {
@@ -22,21 +23,30 @@ public class JpaMain {
             Member member = new Member();
             member.setUsername("teamA");
             member.setAge(10);
-
             member.setTeam(team);
+            member.setType(MemberType.ADMIN);
+
 
             em.persist(member);
+            //
+            Member member1 = new Member();
+            member1.setUsername("team B");
+            member1.setAge(10);
+            member1.setTeam(team);
+            member1.setType(MemberType.ADMIN);
+
+
+            em.persist(member1);
 
 
             em.flush();
             em.clear();
 
-            String query = "select m from Member m left join m.team t on m.username = t.name";
-
-            List<Member> result = em.createQuery(query, Member.class)
+            String query = "select t from Team t ";
+            List<Team> singleResult = em.createQuery(query, Team.class)
                     .getResultList();
+             singleResult.get(0).getMembers().get(0);
 
-            System.out.println("result.get(0) = " + result.get(0));
 
             tx.commit();
 
